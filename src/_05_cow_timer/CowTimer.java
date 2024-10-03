@@ -36,7 +36,7 @@ public class CowTimer {
 	}
 
 	public void start() throws InterruptedException {
-		for (int i = seconds; i<0; i--) { 
+		for (int i = seconds; i>0; i--) { 
 			System.out.println(i);
 			Thread.sleep(1000);
 		}
