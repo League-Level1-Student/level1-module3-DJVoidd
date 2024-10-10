@@ -17,9 +17,9 @@ public class Frogger extends PApplet {
 
 	@Override
 	public void setup() {
-		car1 = new Car(140, 100, 180, 7);
-		car2 = new Car(100, 100, 150, 10);
-		car3 = new Car(60, 100, 120, 13);
+		car1 = new Car(600, 150, 50, 7);
+		car2 = new Car(600, 90, 50, 15);
+		car3 = new Car(600, 40, 50, 13);
 		frameRate(20);
 	}
 
@@ -27,9 +27,7 @@ public class Frogger extends PApplet {
 	public void draw() {
 		background(100,10,10);
 		fill(27, 67, 50);
-		System.out.println("draw called once");
 		ellipse(hopX, hopY, 40, 40);
-		ellipse(100,100,100,100);
 		if (hopX < 0) {
 			hopX = 0;
 		}
@@ -44,31 +42,55 @@ public class Frogger extends PApplet {
 		}
 		car1.display();
 		car1.driveLeft();
+		car2.display();
+		car2.driveLeft();
+		car3.display();
+		car3.driveLeft();
+		if (intersects(car1) == true) {
+			hopX = 300;
+			hopY = 300;
+		}
+		if (intersects(car2) == true) {
+			hopX = 300;
+			hopY = 300;
+		}
+		if (intersects(car3) == true) {
+			hopX = 300;
+			hopY = 300;
+		}
 	}
 	public void keyPressed() {
 		if(key == CODED){
 			if(keyCode == UP)
 			{
-				hopY -= 5;
+				hopY -= 7;
 			}
 			else if(keyCode == DOWN)
 			{
-				hopY += 5; 
+				hopY += 7; 
 			}
 			else if(keyCode == RIGHT)
 			{
-				hopX += 5;
+				hopX += 7;
 			}
 			else if(keyCode == LEFT)
 			{
-				hopX -=5;
+				hopX -=7;
 			}
 		}
 	}
 	static public void main(String[] args) {
 		PApplet.main(Frogger.class.getName());
 	}
-
+	boolean intersects(Car car) {
+		if ((hopY > car.y && hopY < car.y+50) &&
+				(hopX > car.x && hopX < car.x+car.size)) {
+			return true;
+		}
+		else  {
+			return false;
+		}
+	}
 	class Car {
 		int x;
 		int y;
@@ -86,8 +108,9 @@ public class Frogger extends PApplet {
 			rect(x , y,  size, size);
 		}
 		public void driveLeft() {
-			while(true) {
-				x -= speed;
+			x -= speed;
+			if (x<0) {
+				x = 600;
 			}
 		}
 	}
